@@ -1,0 +1,27 @@
+{
+  "name": "gh-pages-boilerplate",
+  "homepage": "https://github.com/gronke/gh-pages-boilerplate",
+  "authors": [
+    "Stefan Grönke <stefan@gronke.net>"
+  ],
+  "description": "Boilerplate with Bootstrap 3 for release as GitHub project page",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "bootstrap",
+    "livereload",
+    "gh-pages"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.6"
+  }
+}
