@@ -14,6 +14,21 @@ gulp.task('clean', function () {
     .pipe(plugins.clean());
 });
 
+gulp.task('copy:fonts', function () {
+  return gulp.src('fonts{,/**}/*')
+    .pipe(plugins.copy('dist/'));
+});
+
+gulp.task('copy:images', function () {
+  return gulp.src('images{,/**}/*.{png,jpg,gif,svg}')
+    .pipe(plugins.copy('dist/'));
+});
+
+gulp.task('copy:favicon', function () {
+  return gulp.src('favicon.ico')
+    .pipe(plugins.copy('dist/'));
+});
+
 // HTML + Scripts
 var htmlbuildJsPreprocessor = plugins.htmlbuild.preprocess.js(function (block) {
 
@@ -64,16 +79,21 @@ gulp.task('styles', function () {
 
 gulp.task('build', [
   'html',
-  'styles'
+  'styles',
+  'scripts',
+  'copy:fonts',
+  'copy:images',
+  'copy:favicon'
 ]);
 
 gulp.task('watch', function() {
   gulp.watch('index.html', ['html']);
   gulp.watch('styles/main.scss', ['styles']);
   gulp.watch('scripts/*.js', ['scripts']);
+  gulp.watch('images/*.{png,jpg,gif,svg}', ['copy:images']);
 });
 
-gulp.task('serve', function(event) {
+gulp.task('connect', function(event) {
   plugins.connect.server({
       root: 'dist/',
       port: 8080,
@@ -81,7 +101,10 @@ gulp.task('serve', function(event) {
   });
 });
 
-gulp.task('default', function() {
-  return plugins.runSequence('clean', ['html', 'styles', 'scripts'], ['serve', 'watch']);
+gulp.task('serve', function() {
+  return plugins.runSequence('clean', 'build', ['connect', 'watch']);
 });
+
+gulp.task('default', ['serve']);
+
 
